@@ -37,6 +37,7 @@ class Wuex {
         this.actions[actionName] = (...args) => {
           return action({
             commit: this.commit.bind(this),
+            dispatch: this.dispatch.bind(this),
             rootState: this.state,
           }, ...args)
         }
@@ -55,6 +56,10 @@ class Wuex {
         })
       })
     })
+  }
+
+  dispatch (actionName, payload) {
+    return this.actions[actionName](payload)
   }
 
   commit (type, data) {
