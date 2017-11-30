@@ -36,9 +36,11 @@ class Wuex {
       mapObject(module.actions || {}, (action, actionName) => {
         this.actions[actionName] = (...args) => {
           return action({
+            state: this.state[moduleName],
+            rootState: this.state,
             commit: this.commit.bind(this),
             dispatch: this.dispatch.bind(this),
-            rootState: this.state,
+            getters: this.getters,
           }, ...args)
         }
       })
