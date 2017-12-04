@@ -5,12 +5,12 @@ import { helpers } from '@tinajs/tina'
 const { addHooks } = helpers
 
 function log (...args) {
-  if (Wuex.debug) {
-    console.log(`[Wuex] -`, ...args)
+  if (Tinax.debug) {
+    console.log(`[Tinax] -`, ...args)
   }
 }
 
-class Wuex {
+class Tinax {
   static debug = false
 
   bus = new EventEmitter()
@@ -108,4 +108,4 @@ class Wuex {
   }
 }
 
-export default Wuex
+export default Tinax

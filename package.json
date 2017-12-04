@@ -1,8 +1,8 @@
 {
-  "name": "@tinajs/wuex",
+  "name": "@tinajs/tinax",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/wuex.js",
+  "main": "dist/tinax.js",
   "author": "yelo",
   "license": "MIT",
   "scripts": {

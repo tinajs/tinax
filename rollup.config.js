@@ -2,8 +2,8 @@ import base from './rollup.conf.base.js'
 
 export default Object.assign({}, base, {
   output: {
-    file: 'dist/wuex.js',
+    file: 'dist/tinax.js',
     format: 'umd',
-    name: 'Wuex',
+    name: 'Tinax',
   },
 })
