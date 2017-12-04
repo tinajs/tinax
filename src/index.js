@@ -1,7 +1,8 @@
 import EventEmitter from 'eventemitter3'
+import foreach from 'foreach'
 import { helpers } from '@tinajs/tina'
 
-const { mapObject, addHooks } = helpers
+const { addHooks } = helpers
 
 function log (...args) {
   if (Wuex.debug) {
@@ -21,19 +22,19 @@ class Wuex {
     this.actions = {}
     this.getters = {}
 
-    mapObject(modules, (module, moduleName) => {
+    foreach(modules, (module, moduleName) => {
       log(`[load module] - ${moduleName}`)
 
       // state
       this.state[moduleName] = module.state
 
       // getters
-      mapObject(module.getters || {}, (getter, getterName) => {
+      foreach(module.getters || {}, (getter, getterName) => {
         this.getters[getterName] = () => getter(this.state[moduleName], this.getters)
       })
 
       // actions
-      mapObject(module.actions || {}, (action, actionName) => {
+      foreach(module.actions || {}, (action, actionName) => {
         this.actions[actionName] = (...args) => {
           return action({
             state: this.state[moduleName],
@@ -46,7 +47,7 @@ class Wuex {
       })
 
       // mutations
-      mapObject(module.mutations || {}, (mutation, mutationName) => {
+      foreach(module.mutations || {}, (mutation, mutationName) => {
         log(`[load mutation] - ${mutationName} on ${moduleName}`)
         bus.addListener(`mutation:${mutationName}`, (payload) => {
           try {

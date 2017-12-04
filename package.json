@@ -26,6 +26,7 @@
     "@tinajs/tina": "^0.0.1"
   },
   "dependencies": {
-    "eventemitter3": "^2.0.3"
+    "eventemitter3": "^2.0.3",
+    "foreach": "^2.0.5"
   }
 }
