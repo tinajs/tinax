@@ -87,22 +87,28 @@ class Tinax {
         properties.methods = { ...properties.methods || {}, ...mapping.actions(this.actions) }
       }
 
-      return addHooks(properties, {
-        onLoad (...args) {
-          bus.addListener('change', handlers.onChange = () => {
-            try {
-              this.setData(combine({ context: this }))
-            } catch (error) {
-              console.error(error)
-            }
-          })
-          this.setData(combine({ context: this }))
-        },
-        onUnload (...args) {
-          if (handlers.onChange) {
-            bus.removeListener('change', handlers.onChange)
+      function install () {
+        bus.addListener('change', handlers.onChange = () => {
+          try {
+            this.setData(combine({ context: this }))
+          } catch (error) {
+            console.error(error)
           }
-        },
+        })
+        this.setData(combine({ context: this }))
+      }
+
+      function uninstall () {
+        if (handlers.onChange) {
+          bus.removeListener('change', handlers.onChange)
+        }
+      }
+
+      return addHooks(properties, {
+        onLoad: install,
+        onUnload: uninstall,
+        attached: install,
+        detached: uninstall,
       })
     }
   }
