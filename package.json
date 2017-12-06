@@ -2,7 +2,7 @@
   "name": "@tinajs/tinax",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/tinax.js",
+  "main": "dist/tinax.min.js",
   "author": "yelo",
   "license": "MIT",
   "scripts": {
@@ -20,7 +20,8 @@
     "rollup": "^0.51.5",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
-    "rollup-plugin-node-resolve": "^3.0.0"
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1"
   },
   "peerDependencies": {
     "@tinajs/tina": "^0.0.1"
