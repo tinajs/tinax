@@ -13,5 +13,8 @@ export default {
     nodejs(),
     commonjs(),
   ],
+  globals: {
+    '@tinajs/tina': 'tina',
+  },
   external: ['@tinajs/tina']
 }
