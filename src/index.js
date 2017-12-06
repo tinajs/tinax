@@ -74,7 +74,6 @@ class Tinax {
     let wuex = this
     return (properties) => {
       let { bus } = this
-      let handlers = {}
 
       let combine = function ({ context }) {
         return {
@@ -88,7 +87,8 @@ class Tinax {
       }
 
       function install () {
-        bus.addListener('change', handlers.onChange = () => {
+        this.__tinax_connection__ = this.__tinax_connection__ || new Connection({ bus })
+        this.__tinax_connection__.addListener('change', () => {
           try {
             this.setData(combine({ context: this }))
           } catch (error) {
@@ -99,8 +99,8 @@ class Tinax {
       }
 
       function uninstall () {
-        if (handlers.onChange) {
-          bus.removeListener('change', handlers.onChange)
+        if (this.__tinax_connection__) {
+          this.__tinax_connection__.removeAllListeners()
         }
       }
 
@@ -110,6 +110,29 @@ class Tinax {
         attached: install,
         detached: uninstall,
       })
+    }
+  }
+}
+
+class Connection {
+  constructor ({ bus }) {
+    this.bus = bus
+    this.handlers = {}
+  }
+
+  addListener (name, handler) {
+    this.handlers[name] = this.handlers[name] || []
+    this.handlers[name].push(handler)
+    this.bus.addListener(name, handler)
+    return handler
+  }
+
+  removeAllListeners (iteratee) {
+    for (let name in this.handlers) {
+      let handler
+      while (handler = this.handlers[name].pop()) {
+        this.bus.removeListener(name, handler)
+      }
     }
   }
 }
