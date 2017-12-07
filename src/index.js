@@ -1,8 +1,6 @@
 import EventEmitter from 'eventemitter3'
 import foreach from 'foreach'
-import { helpers } from '@tinajs/tina'
-
-const { addHooks } = helpers
+import { appendHooks } from '@tinajs/tina'
 
 function log (...args) {
   if (Tinax.debug) {
@@ -104,7 +102,7 @@ class Tinax {
         }
       }
 
-      return addHooks(properties, {
+      return appendHooks(properties, {
         onLoad: install,
         onUnload: uninstall,
         attached: install,
