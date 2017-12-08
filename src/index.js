@@ -1,6 +1,5 @@
 import EventEmitter from 'eventemitter3'
 import foreach from 'foreach'
-import { appendHooks } from '@tinajs/tina'
 
 function log (...args) {
   if (Tinax.debug) {
@@ -70,7 +69,7 @@ class Tinax {
 
   connect (mapping) {
     let wuex = this
-    return (properties) => {
+    return (options, Model) => {
       let { bus } = this
 
       let combine = function ({ context }) {
@@ -81,7 +80,7 @@ class Tinax {
       }
 
       if (mapping.actions) {
-        properties.methods = { ...properties.methods || {}, ...mapping.actions(this.actions) }
+        options.methods = { ...options.methods || {}, ...mapping.actions(this.actions) }
       }
 
       function install () {
@@ -102,7 +101,7 @@ class Tinax {
         }
       }
 
-      return appendHooks(properties, {
+      return Model.mix(options, {
         onLoad: install,
         onUnload: uninstall,
         attached: install,
