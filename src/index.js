@@ -69,44 +69,44 @@ class Tinax {
 
   connect (mapping) {
     let wuex = this
-    return (options, Model) => {
-      let { bus } = this
+    let { bus } = this
+    let methods = {}
 
-      let combine = function ({ context }) {
-        return {
-          ...(mapping.state ? mapping.state.call(context, wuex.state) : {}),
-          ...(mapping.getters ? mapping.getters.call(context, wuex.getters) : {}),
+    let combine = function ({ context }) {
+      return {
+        ...(mapping.state ? mapping.state.call(context, wuex.state) : {}),
+        ...(mapping.getters ? mapping.getters.call(context, wuex.getters) : {}),
+      }
+    }
+
+    if (mapping.actions) {
+      methods = mapping.actions(this.actions)
+    }
+
+    function install () {
+      this.__tinax_connection__ = this.__tinax_connection__ || new Connection({ bus })
+      this.__tinax_connection__.addListener('change', () => {
+        try {
+          this.setData(combine({ context: this }))
+        } catch (error) {
+          console.error(error)
         }
-      }
-
-      if (mapping.actions) {
-        options.methods = { ...options.methods || {}, ...mapping.actions(this.actions) }
-      }
-
-      function install () {
-        this.__tinax_connection__ = this.__tinax_connection__ || new Connection({ bus })
-        this.__tinax_connection__.addListener('change', () => {
-          try {
-            this.setData(combine({ context: this }))
-          } catch (error) {
-            console.error(error)
-          }
-        })
-        this.setData(combine({ context: this }))
-      }
-
-      function uninstall () {
-        if (this.__tinax_connection__) {
-          this.__tinax_connection__.removeAllListeners()
-        }
-      }
-
-      return Model.mix(options, {
-        onLoad: install,
-        onUnload: uninstall,
-        attached: install,
-        detached: uninstall,
       })
+      this.setData(combine({ context: this }))
+    }
+
+    function uninstall () {
+      if (this.__tinax_connection__) {
+        this.__tinax_connection__.removeAllListeners()
+      }
+    }
+
+    return {
+      methods,
+      onLoad: install,
+      onUnload: uninstall,
+      attached: install,
+      detached: uninstall,
     }
   }
 }
