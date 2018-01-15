@@ -1,5 +1,5 @@
 # Tinax
-> A Vuex-like state management library for Tina based Wechat-Mini-Program
+> A Vuex-like state management library for Tina.js based Wechat-Mini-Program
 
 ## Installation
 ```bash

@@ -1,10 +1,21 @@
 {
   "name": "@tinajs/tinax",
   "version": "0.1.0",
-  "description": "",
+  "description": "A Vuex-like state management library for Tina.js based Wechat-Mini-Program",
   "main": "dist/tinax.js",
   "author": "yelo",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "url": "tinajs/tinax",
+    "type": "git"
+  },
+  "bugs": {
+    "url": "https://github.com/tinajs/tinax/issues"
+  },
+  "homepage": "https://github.com/tinajs/tinax#readme",
   "scripts": {
     "start": "rollup -c -w",
     "clean": "rimraf ./dist",
