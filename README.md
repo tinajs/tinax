@@ -1,6 +1,10 @@
 # Tinax
 > A Vuex-like state management library for Tina.js based Wechat-Mini-Program
 
+[![npm](https://img.shields.io/npm/v/@tinajs/tinax.svg?style=flat-square)](https://www.npmjs.com/package/@tinajs/tinax)
+[![license](https://img.shields.io/github/license/tinajs/tinax.svg?style=flat-square)](./LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
 ## Installation
 ```bash
 npm i --save @tinajs/tinax
