@@ -1,6 +1,6 @@
 {
   "name": "@tinajs/tinax",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A Vuex-like state management library for Tina.js based Wechat-Mini-Program",
   "main": "dist/tinax.js",
   "author": "yelo",
